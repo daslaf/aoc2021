@@ -7,6 +7,7 @@ export function countIncreases(input) {
       increases++
     }
   }
+
   return increases
 }
 //#endregion
@@ -14,7 +15,7 @@ export function countIncreases(input) {
 //#region part2
 export function countWindowIncreases(input) {
   const sums = subArrays(3, input)
-    .map(nums => nums.reduce((acc, i) => acc + i, 0))
+    .map(nums => nums.reduce((acc, i) => acc + i))
 
   return countIncreases(sums)
 }
