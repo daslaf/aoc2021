@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "description": "Solutions for AOC 2021",
+  "type": "module",
   "repository": {
     "type": "git",
     "url": "https://github.com/daslaf/aoc2021.git"
@@ -12,5 +13,8 @@
     "email": "osman.cea@gmail.com",
     "url": "https://daslaf.dev"
   },
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "prettier": "2.5.0"
+  }
 }
