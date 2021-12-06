@@ -79,9 +79,6 @@ export function getSupportRating(data) {
       co2ScrubberRatings = zeroes.size <= ones.size ? zeroes : ones
     }
 
-    // console.log('oxygenGeneratorRatings', oxygenGeneratorRatings)
-    // console.log('co2ScrubberRatings', co2ScrubberRatings)
-
     if ((oxygenGeneratorRatings.size === 1) & (co2ScrubberRatings.size === 1)) {
       break
     }
