@@ -1,5 +1,7 @@
 {
   "editor.formatOnSave": true,
   "editor.defaultFormatter": "esbenp.prettier-vscode",
-  "cSpell.enabled": false
+  "cSpell.enabled": false,
+  "javascript.preferences.importModuleSpecifierEnding": "js",
+  "prettier.requireConfig": true
 }

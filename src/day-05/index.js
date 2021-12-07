@@ -2,10 +2,9 @@ import { realInput as input } from './input.js'
 import { toArray } from '../utils.js'
 
 export const range = (start, end) => {
-  if (end > start)
-    return new Array(end - start).fill(0).map((_, index) => start + index)
-
-  return new Array(start - end).fill(0).map((_, index) => start - index)
+  return new Array(Math.abs(start - end))
+    .fill(0)
+    .map((_, index) => end > start ? start + index : start - index)
 }
 
 export const getPoints = vent => {

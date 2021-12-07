@@ -1,4 +1,4 @@
-import { sampleInput as input } from './input.js'
+import { realInput as input } from './input.js'
 import { getPowerConsumption, getSupportRating } from './main.js'
 import { toArray } from '../utils.js'
 
