@@ -36,11 +36,8 @@ function countFishes(days, fishes) {
     for (const numOfDays in fishesCount) {
       const amount = fishesCount[numOfDays]
       const num = +numOfDays
-      // console.log(`S: ${amount} fishes with ${numOfDays} days left`)
 
       if (num === 0) {
-        // updated[6] = amount // reset all that went to 0
-        // updated[8] = newSpans
         newSpans = amount // spawn the same amount of fishes
       } else {
         updated[num - 1] = amount // take a day on fishes that don't spawn others
@@ -62,4 +59,5 @@ function countFishes(days, fishes) {
 
 const fishes = input.split(',').map(f => ({ days: +f }))
 
+// console.log(originalNaiveSolution(256, fishes))
 console.log(countFishes(256, fishes))
