@@ -1,46 +1,36 @@
 import { realInput as input } from './input.js'
 
-const summatory = n => n * (n + 1) / 2
+const summatory = n => (n * (n + 1)) / 2
 const crabs = input.split(',').map(v => +v)
 
+function getCheapestOutcomeByRate(rateFn, crabs) {
+  const max = Math.max(...crabs)
+  let minEffort
+
+  for (let pos = 0; pos <= max; pos++) {
+    let totalEffort = 0
+
+    for (const crab of crabs) {
+      totalEffort += rateFn({ destination: pos, currentPosition: crab })
+    }
+
+    minEffort = Math.min(totalEffort, minEffort || Infinity)
+  }
+
+  return minEffort
+}
+
 // part 1
-function getCheapestOutcome(crabs) {
-  const max = Math.max(...crabs)
-  let minEffort
+console.log(
+  getCheapestOutcomeByRate(({ destination, currentPosition }) => {
+    return Math.abs(destination - currentPosition)
+  }, crabs)
+)
 
-  for (let pos = 0; pos <= max; pos++) {
-    let totalEffort = 0
+// part 2
+console.log(
+  getCheapestOutcomeByRate(({ destination, currentPosition }) => {
+    return summatory(Math.abs(destination - currentPosition))
+  }, crabs)
+)
 
-    for (const crab of crabs) {
-      totalEffort += Math.abs(crab - pos)
-    }
-
-    minEffort = minEffort ? Math.min(totalEffort, minEffort) : totalEffort
-  }
-
-
-  return minEffort
-}
-
-// part 2 
-function getCheapestOutcome2(crabs) {
-  const max = Math.max(...crabs)
-  let minEffort
-
-  for (let pos = 0; pos <= max; pos++) {
-    let totalEffort = 0
-
-    for (const crab of crabs) {
-      totalEffort += summatory(Math.abs(crab - pos))
-    }
-
-    minEffort = minEffort ? Math.min(totalEffort, minEffort) : totalEffort
-  }
-
-
-  return minEffort
-}
-
-
-console.log(getCheapestOutcome(crabs))
-console.log(getCheapestOutcome2(crabs))
