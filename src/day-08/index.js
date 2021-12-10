@@ -1,19 +1,6 @@
 import { difference, intersection } from 'ramda'
 import { realInput as input } from './input.js'
 
-const segmentsByDigitAmount = {
-  0: 6,
-  1: 2,
-  2: 5,
-  3: 5,
-  4: 4,
-  5: 5,
-  6: 6,
-  7: 3,
-  8: 7,
-  9: 6
-}
-
 const entries = input.split(/\n/)
   .map(line => line.split('|').map(entry => entry.trim()))
   .map(entry => entry.map(section => section.split(' ')))
@@ -22,15 +9,14 @@ const outputs = entries
 
 // part 1
 function countEasyDigits(data) {
-  const one = segmentsByDigitAmount[1]
-  const four = segmentsByDigitAmount[4]
-  const seven = segmentsByDigitAmount[7]
-  const eight = segmentsByDigitAmount[8]
+  const one = 2
+  const four = 4
+  const seven = 3
+  const eight = 7
 
   const targeted = [one, four, seven, eight]
 
   return data
-    .flat()
     .filter(digit => targeted.includes(digit.length))
     .length
 }
@@ -98,6 +84,5 @@ function getOutputValue([patterns, output]) {
 function getOutputSummatory(entries) {
   return entries.reduce((acc, entry) => acc + getOutputValue(entry), 0)
 }
-
 
 console.log(getOutputSummatory(entries))
