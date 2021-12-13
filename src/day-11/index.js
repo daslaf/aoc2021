@@ -1,7 +1,9 @@
 import { realInput as input } from './input.js'
 
-const octopuses = input.split(/\n/).map(row => row.split('').map(v => ({ flashed: false, lightLevel: +v })))
-const toString = matrix => matrix.map(row => row.map(o => o.lightLevel).join(',')).join('\n')
+const octopuses = input
+  .split(/\n/)
+  .map(row => row.split('').map(v => ({ flashed: false, lightLevel: +v })))
+
 const getAdjacentCoordinates = ({ width, height }) => {
   return ([x, y]) => {
     const top = y !== 0 ? [x, y - 1] : null
@@ -29,7 +31,6 @@ const getAdjacentCoordinates = ({ width, height }) => {
   }
 }
 
-
 const width = octopuses[0].length
 const height = octopuses.length
 
@@ -37,10 +38,11 @@ const getCoordinates = getAdjacentCoordinates({ width, height })
 
 function step(octos) {
   let flashes = 0
-  let octopuses = octos.map(row => row.map(oct => ({ ...oct, lightLevel: oct.lightLevel + 1 }))) // increases the energy of all octopuses by 1
+  let octopuses = octos.map(row =>
+    row.map(oct => ({ ...oct, lightLevel: oct.lightLevel + 1 }))
+  ) // increases the energy of all octopuses by 1
   let updatedOctopuses
   let siblings
-
 
   do {
     updatedOctopuses = octopuses.map(row => new Array(row.length)) // creates an empty matrix to store updated octopuses
@@ -50,24 +52,21 @@ function step(octos) {
       for (let x = 0; x < octopuses[y].length; x++) {
         const octopus = octopuses[y][x]
         const shouldFlash = octopus.lightLevel > 9 && octopus.flashed === false
-        // just update those that should flash 
+        // just update those that should flash
         // the rest will be updated after collecting all the sibling coordinates
-        updatedOctopuses[y][x] = shouldFlash ? { flashed: true, lightLevel: 0 } : octopus
-
+        updatedOctopuses[y][x] = shouldFlash
+          ? { flashed: true, lightLevel: 0 }
+          : octopus
+        flashes = shouldFlash ? flashes + 1 : flashes
 
         if (shouldFlash) {
-          flashes++
           // search all the siblings that did not flash immediately
           // and put them in a queue of octopuses to be updated
-          Object
-            .values(getCoordinates([x, y]))
+          Object.values(getCoordinates([x, y]))
             .filter(([x1, y1]) => octopuses[y1][x1].lightLevel <= 9)
             .forEach(([x1, y1]) => {
               const current = siblings.get(`${x1},${y1}`) || 0
-              siblings.set(
-                `${x1},${y1}`,
-                current + 1
-              )
+              siblings.set(`${x1},${y1}`, current + 1)
             })
         }
       }
@@ -80,7 +79,7 @@ function step(octos) {
       if (!octopus.flashed) {
         updatedOctopuses[+y][+x] = {
           ...octopus,
-          lightLevel: octopus.lightLevel + times
+          lightLevel: octopus.lightLevel + times,
         }
       }
     }
@@ -88,7 +87,10 @@ function step(octos) {
     octopuses = updatedOctopuses
   } while (siblings.size > 0)
 
-  return [flashes, octopuses.map(row => row.map(oct => ({ ...oct, flashed: false })))]
+  return [
+    flashes,
+    octopuses.map(row => row.map(oct => ({ ...oct, flashed: false }))),
+  ]
 }
 
 function countFlashes(data) {

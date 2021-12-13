@@ -21,7 +21,6 @@ function getSyntaxErrorScore(lines) {
   return lines
     .map(line => scoreTable[findCorruptedChar(line)] || 0)
     .reduce((a, b) => a + b)
-
 }
 
 function findCorruptedChar(chars) {

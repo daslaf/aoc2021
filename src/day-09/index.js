@@ -14,7 +14,7 @@ function getAdjacentCoordinates({ width, height }, [x, y]) {
     top && { top },
     right && { right },
     bottom && { bottom },
-    left && { left },
+    left && { left }
   ) // We get rid of nulls easily
 }
 
@@ -49,7 +49,6 @@ function getLowPointsRiskLevel(board) {
   const lowPoints = findLowPoints(board)
 
   return lowPoints.map(([x, y]) => board[y][x]).reduce((a, b) => a + b + 1, 0)
-
 }
 
 console.log(getLowPointsRiskLevel(points))
@@ -58,14 +57,19 @@ console.log(getLowPointsRiskLevel(points))
 function getLargetsBasinsProduct(board) {
   const basins = findLowPoints(board)
     .map(point => findBasin(board, point))
-    .sort((a, b) => a >= b ? -1 : 1)
+    .sort((a, b) => (a >= b ? -1 : 1))
     .slice(0, 3)
 
   return basins.reduce((acc, basin) => acc * basin, 1)
 }
 
 function findBasin(board, [x, y]) {
-  let signals = Object.entries(getAdjacentCoordinates({ width: board[0].length, height: board.length }, [x, y]))
+  let signals = Object.entries(
+    getAdjacentCoordinates({ width: board[0].length, height: board.length }, [
+      x,
+      y,
+    ])
+  )
   let count = signals.length + 1
 
   for (const [direction, [x1, y1]] of signals) {
@@ -76,13 +80,17 @@ function findBasin(board, [x, y]) {
       continue
     }
 
-    // const opposite = { top: 'bottom', right: 'left', bottom: 'top', left: 'right' }[direction]
     const adjacents = ignoreOrigin(
       direction,
-      getAdjacentCoordinates({ width: board[0].length, height: board.length }, [x1, y1]),
+      getAdjacentCoordinates({ width: board[0].length, height: board.length }, [
+        x1,
+        y1,
+      ])
     )
 
-    const newSignals = Object.entries(adjacents).filter(signal => !signals.find(s => s[1].toString() === signal[1].toString()))
+    const newSignals = Object.entries(adjacents).filter(
+      signal => !signals.find(s => s[1].toString() === signal[1].toString())
+    )
 
     signals.push(...newSignals)
     count += newSignals.length
@@ -113,4 +121,3 @@ function ignoreOrigin(surroundingPosition, surroundings) {
 }
 
 console.log(getLargetsBasinsProduct(points))
-
